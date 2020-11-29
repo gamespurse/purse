@@ -1,0 +1,33 @@
+.Purse {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.Screenbox {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transition: transform 2.5s;
+
+  outline: 1px dashed black;
+}
+
+canvas.Tiles {
+  position: absolute;
+  outline: 1px dashed red;
+}
+
+canvas {
+  // position: absolute;
+  image-rendering: pixelated;
+  // background-color: red;
+}
+canvas.Sprite {
+  position: absolute;
+}
+
+.paperplane {
+  width: 96px;
+  height: 96px;
+}

@@ -1,0 +1,83 @@
+.person,
+.person * {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  // pointer-events: none;
+}
+.person {
+  position: absolute;
+  width: 64px;
+  height: 123px;
+
+  // transition-timing-function: easeOutBounce;
+  // transition-duration: 1s;
+  // transition-property: transform;
+  // transition: transform 0.375s ease-in;
+
+  // outline: 1px dotted blue;
+}
+.person:not(.bounding-box) {
+  position: static;
+
+  // outline: 1px dashed red;
+}
+// .person.dir_left {
+//   transform: scaleX(1);
+// }
+// .person.dir_right {
+//   transform: scaleX(-1);
+// }
+
+.face {
+  width: 64px;
+  height: 88px;
+
+  overflow: hidden;
+  border-radius: 100vmax;
+
+  background-color: black;
+
+  display: flex;
+  justify-content: center;
+
+  canvas {
+    height: 100%;
+    z-index: 1;
+  }
+}
+.person.isSafari_true .face {
+  -webkit-mask-image: -webkit-radial-gradient(white, black); // border-radius fix
+}
+
+.body {
+  position: absolute;
+  height: 97px;
+  transform: translate(5px, 80px);
+  user-select: none;
+  pointer-events: none;
+}
+.body.false {
+  display: none;
+}
+
+.hidden {
+  position: fixed;
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hat {
+  position: absolute;
+  font-size: 90px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.person.hat_🧢 .hat {
+  transform: translate(-21px, -132px);
+}
+.person.isSafari_true.hat_🧢 .hat {
+  transform: translate(-22px, -133px);
+}
