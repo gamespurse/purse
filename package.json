@@ -1,5 +1,7 @@
 {
   "scripts": {
+    "install": "firebase init",
+    "postinstall": "firebase apps:sdkconfig > firebase-init.js",
     "start": "parcel frontend/index.html -p 80 -d backend/dist_frontend"
   },
   "devDependencies": {
@@ -11,7 +13,6 @@
   "dependencies": {
     "animejs": "^3.2.1",
     "babel-polyfill": "^6.26.0",
-    "firebase": "^8.1.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

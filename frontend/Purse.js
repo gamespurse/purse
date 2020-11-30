@@ -22,8 +22,6 @@ import Sprite, { Direction } from "./Sprite"
 
 import { useAnimationFrame, useInnerSize, useKeysDown, useLog, useGamepad, useImages } from "./use"
 
-import firebase, { database, useAuth } from "./firebase"
-
 const { keys, values, entries } = Object
 
 const { min, max, abs, random, ceil } = Math
@@ -166,12 +164,18 @@ const ghostHeights = {
 
 /** @type {FunctionComponent<void>} */
 const Purse = () => {
-  const { uid } = useAuth()
+  /** @type {[firebase.default.auth.UserCredential, Dispatch<SetStateAction<firebase.default.auth.UserCredential>>]} */
+  const [userCred, setUserCred] = useState()
+  const uid = userCred?.user?.uid
+
+  useEffect(() => {
+    firebase.default.auth().signInAnonymously().then(setUserCred)
+  }, [])
   window.uid = uid
 
   useLog({ uid })
 
-  return <div>{uid ? <PurseOnline uid={uid} /> : null}</div>
+  return <div>{uid && <PurseOnline uid={uid} />}</div>
 }
 
 /**
@@ -206,7 +210,7 @@ const PurseOnline = props => {
   const wTilemapPx = tilePx * wTilemapTiles
   const hTilemapPx = tilePx * hTilemapTiles
 
-  const boxScale = (1 * innerMin) / screenBoxPx
+  const boxScale = 1 // innerMin / screenBoxPx
 
   useLog({ boxScale })
 
