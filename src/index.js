@@ -1,6 +1,9 @@
-import "babel-polyfill"
-import "@babel/plugin-proposal-optional-chaining"
-import "@babel/plugin-proposal-nullish-coalescing-operator"
+import "./polyfills"
+
+import firebase from "firebase/app"
+window.firebase = firebase
+require("../init-firebase")
+
 import React from "react"
 import { render } from "react-dom"
 

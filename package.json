@@ -1,8 +1,13 @@
 {
   "scripts": {
-    "install": "firebase init",
-    "postinstall": "firebase apps:sdkconfig > firebase-init.js",
-    "start": "parcel frontend/index.html -p 80 -d backend/dist_frontend"
+    "newpurse": "npm run firebase_step-1",
+    "prefirebase_step-1": "firebase login",
+    "firebase_step-1": "firebase init",
+    "postfirebase_step-1": "npm run firebase_step-2",
+    "prefirebase_step-2": "firebase apps:create",
+    "firebase_step-2": "firebase apps:sdkconfig > init-firebase.js",
+    "postfirebase_step-2": "echo 'newpurse done'",
+    "purse": "parcel src/index.html -p 80 -d public"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -13,6 +18,7 @@
   "dependencies": {
     "animejs": "^3.2.1",
     "babel-polyfill": "^6.26.0",
+    "firebase": "^8.1.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   }

@@ -1,9 +1,3 @@
-import "./Purse.scss"
-// import './Skins.scss'
-
-import vehicle_pngs from "../resources/vehicles/*.png"
-import ghost_pngs from "../resources/ghosts/*.png"
-
 import React, {
   useEffect,
   useState,
@@ -14,6 +8,14 @@ import React, {
   MutableRefObject,
   CSSProperties,
 } from "react"
+import "firebase/app"
+import "firebase/auth"
+
+import "./Purse.scss"
+// import './Skins.scss'
+
+import vehicle_pngs from "../assets/vehicles/*.png"
+import ghost_pngs from "../assets/ghosts/*.png"
 
 import Sprite, { Direction } from "./Sprite"
 
@@ -164,12 +166,12 @@ const ghostHeights = {
 
 /** @type {FunctionComponent<void>} */
 const Purse = () => {
-  /** @type {[firebase.default.auth.UserCredential, Dispatch<SetStateAction<firebase.default.auth.UserCredential>>]} */
+  /** @type {[firebase.auth.UserCredential, Dispatch<SetStateAction<firebase.auth.UserCredential>>]} */
   const [userCred, setUserCred] = useState()
   const uid = userCred?.user?.uid
 
   useEffect(() => {
-    firebase.default.auth().signInAnonymously().then(setUserCred)
+    firebase.auth().signInAnonymously().then(setUserCred)
   }, [])
   window.uid = uid
 
