@@ -3,10 +3,10 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "purse",
+			"script": "devpurse",
 			"problemMatcher": [],
-			"label": "npm: purse",
-			"detail": "npm run purse",
+			"label": "npm: devpurse",
+			"detail": "npm run devpurse",
 			"group": {
 				"kind": "build",
 				"isDefault": true

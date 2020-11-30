@@ -7,7 +7,9 @@
     "prefirebase_step-2": "firebase apps:create",
     "firebase_step-2": "firebase apps:sdkconfig > init-firebase.js",
     "postfirebase_step-2": "echo 'newpurse done'",
-    "purse": "parcel src/index.html -p 80 -d public"
+    "devpurse": "parcel src/index.html -p 80 -d private",
+    "prodpurse": "parcel build src/index.html --no-source-maps -d public",
+    "postprodpurse": "firebase deploy"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
