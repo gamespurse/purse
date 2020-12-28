@@ -12,24 +12,17 @@ import 'firebase/app'
 import 'firebase/auth'
 
 import './Purse.scss'
-// import './Skins.scss'
 
 import vehicle_pngs from '../assets/vehicles/*.png'
 import ghost_pngs from '../assets/ghosts/*.png'
 
 import Sprite, { Direction } from './Sprite'
 
-// import Person from './Person'
-// import Boi from './Boi'
-
-import { useAnimationFrame, useInnerSize, useKeysDown, useLog, useGamepad, useImages } from './use'
+import { useAnimationFrame, useInnerSize, useKeysDown, useLog, useGamepad } from './use'
 
 const { keys, values, entries } = Object
-
 const { min, max, abs, random, ceil } = Math
-
 const { stringify, parse } = JSON
-
 const { log, warn, error } = console
 
 const vehicleNames = keys(vehicle_pngs)
@@ -37,6 +30,7 @@ log(`vehicleNames: ${vehicleNames}`)
 
 const ghostNames = keys(ghost_pngs)
 log(`ghostNames: ${ghostNames}`)
+const randomGhost = () => ~~(random() * ghostNames.length)
 
 export const DIR_UP = 1 << 0,
   DIR_RIGHT = 1 << 1,
@@ -78,34 +72,6 @@ window.ALL_EFFECT_FACE = ALL_EFFECT_FACE
 const ALL_EFFECT_MOVE = EFFECT_MOVE_UP | EFFECT_MOVE_RIGHT | EFFECT_MOVE_DOWN | EFFECT_MOVE_LEFT
 window.ALL_EFFECT_MOVE = ALL_EFFECT_MOVE
 
-const walkingFrames = [1, 0, 1, 2]
-
-const vehicleHeights = {
-  ambulance: 2,
-  'articulated-lorry': 3,
-  'auto-rickshaw': 2,
-  automobile: 2,
-  bicycle: 1,
-  bus: 3,
-  'delivery-truck': 3,
-  'fire-engine': 3,
-  minibus: 2,
-  'motor-boat': 2,
-  'motor-scooter': 2,
-  'police-car': 2,
-  'racing-car': 2,
-  'racing-motorcycle': 2,
-  'railway-car': 2,
-  'recreational-vehicle': 2,
-  sailboat: 1,
-  scooter: 1,
-  speedboat: 1,
-  taxi: 2,
-  tractor: 2,
-  'tram-car': 2,
-  trolleybus: 3,
-}
-
 const ghostHeights = {
   ghost0: 2,
   ghost1: 2,
@@ -118,51 +84,6 @@ const ghostHeights = {
   ghost8: 2,
   ghost9: 2,
 }
-
-// const skins = [
-//   'MicrobialMat',
-//   'Stairs',
-//   'HalfRombes',
-//   'Arrows',
-//   'ZigZag',
-//   'Weave',
-//   'Upholstery',
-//   'StarryNight',
-//   'Marrakesh',
-//   'RainbowBokeh',
-//   'Carbon',
-//   'CarbonFibre',
-//   'Hearts',
-//   'Argyle',
-//   'Steps',
-//   'Waves',
-//   'Cross',
-//   'YinYang',
-//   'Stars',
-//   'BradyBunch',
-//   'Shippo',
-//   'Bricks',
-//   'Seigaiha',
-//   'JapaneseCube',
-//   'PolkaDot',
-//   'Houndstooth',
-//   'Checkerboard',
-//   'DiagonalCheckerboard',
-//   'Tartan',
-//   'Madras',
-//   'LinedPaper',
-//   'BlueprintGrid',
-//   'Tablecloth',
-//   'DiagonalStripes',
-//   'CicadaStripes',
-//   'VerticalStripes',
-//   'HorizontalStripes',
-//   'HoneyComb',
-//   'Wave',
-//   'Pyramid',
-//   'ChocolateWeave',
-//   'CrossDots',
-// ]
 
 /** @type {FunctionComponent<void>} */
 const Purse = () => {
@@ -189,8 +110,6 @@ const Purse = () => {
 const PurseOnline = props => {
   const { uid } = props
   window.uid = uid
-
-  const vehicleImages = useImages(vehicle_pngs)
 
   const gamepad = useGamepad()
 
@@ -235,10 +154,8 @@ const PurseOnline = props => {
 
   /** @type {[Object.<string, AnyEntity>, Dispatch<SetStateAction<Object.<string, AnyEntity>>>]} */
   const [ents, setEnts] = useState(() => {
-    const randomGhost = () => ~~(random() * ghostNames.length)
     const randGhost1 = randomGhost()
     const randGhost2 = randomGhost()
-
     return {
       [uid]: {
         x: 4,
@@ -259,21 +176,19 @@ const PurseOnline = props => {
     }
   })
   window.ents = ents
+  useLog({ ents: stringify(keys(ents), null, 2) })
 
-  const ent = ents[uid] || {}
-  const { x, y, eff } = ent
-  useLog({ eff })
+  // const ent = ents[uid] ?? {}
+  // const { x, y, eff } = ent
+  // useLog({ eff })
 
   const keysDown = useKeysDown()
-  const keysDownNames = keys(keysDown)
-
-  // useLog({ keysDown: keysDownNames })
 
   const inertMs = 200
   const animMs = 500
   const [inertNow, animNow] = useAnimationFrame(inertMs, animMs)
 
-  const utc = new Date().getTime()
+  // const utc = new Date().getTime()
 
   // useEffect(
   //   () => {
@@ -346,10 +261,6 @@ const PurseOnline = props => {
 
       const moveEff = eff & ALL_EFFECT_MOVE
 
-      const moveX = (moveEff & EFFECT_MOVE_LEFT) ^ (moveEff & EFFECT_MOVE_RIGHT)
-      const moveY = (moveEff & EFFECT_MOVE_UP) ^ (moveEff & EFFECT_MOVE_DOWN)
-      const tryMove = moveY | moveX
-
       if (tryFace) {
         const newdir = {
           [EFFECT_FACE_UP]: 'up',
@@ -385,23 +296,9 @@ const PurseOnline = props => {
             dy = y + 1
           }
         }
-        // }
-
-        // if (tryMove) {
-        // const [dx, dy] = {
-        //   [EFFECT_MOVE_UP]: [x, y - 1],
-        //   [EFFECT_MOVE_RIGHT]: [x + 1, y],
-        //   [EFFECT_MOVE_DOWN]: [x, y + 1],
-        //   [EFFECT_MOVE_LEFT]: [x - 1, y],
-        //   [EFFECT_MOVE_UP | EFFECT_MOVE_RIGHT]: [x + 1, y - 1],
-        //   [EFFECT_MOVE_DOWN | EFFECT_MOVE_RIGHT]: [x + 1, y + 1],
-        //   [EFFECT_MOVE_DOWN | EFFECT_MOVE_LEFT]: [x - 1, y + 1],
-        //   [EFFECT_MOVE_UP | EFFECT_MOVE_LEFT]: [x - 1, y - 1],
-        // }[tryMove]
 
         let moveXOk = true
         let moveYOk = true
-        // let moveOk = true
         for (const enemyId in ents) {
           if (enemyId === id) {
             continue

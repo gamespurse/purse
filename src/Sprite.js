@@ -122,7 +122,7 @@ const Sprite = props => {
         translateY,
       })
     }
-  }, [x, y, w, h, scaleX])
+  }, [x, y, w, h, scaleX, scaleY])
 
   return (
     <div
