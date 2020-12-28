@@ -46,8 +46,8 @@ const Sprite = props => {
   const { x, y, w, h, spriteOnSheetDir, dir } = props
 
   const screenBoxTiles = 9
-  const wTilemapTiles = 17
-  const hTilemapTiles = 17
+  const wTilemapTiles = 19
+  const hTilemapTiles = 19
   const tilePx = 32
 
   const [scaleX, setScaleX] = useState(1)
@@ -112,17 +112,8 @@ const Sprite = props => {
       const dwtiles = wTilemapTiles - screenBoxTiles
       const dhtiles = hTilemapTiles - screenBoxTiles
 
-      let translateX = min(0, max(-dwtiles, -(x - screenBoxTiles / 2 + w / 2))) * tilePx
-      let translateY = min(0, max(-dhtiles, -(y - screenBoxTiles / 2 + h / 2))) * tilePx
-
-      const wmapSmaller = dwtiles < 0
-      const hmapSmaller = dhtiles < 0
-      if (wmapSmaller) {
-        translateX = -(dwtiles / 2) * tilePx
-      }
-      if (hmapSmaller) {
-        translateY = -(dhtiles / 2) * tilePx
-      }
+      let translateX = -(dwtiles >= 0 ? max(0, min(dwtiles, x - screenBoxTiles / 2 + w / 2)) : dwtiles / 2) * tilePx
+      let translateY = -(dhtiles >= 0 ? max(0, min(dhtiles, y - screenBoxTiles / 2 + h / 2)) : dhtiles / 2) * tilePx
 
       anime({
         targets: props.tilemap.current,

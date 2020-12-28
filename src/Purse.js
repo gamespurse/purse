@@ -203,8 +203,8 @@ const PurseOnline = props => {
   const [mapNum, setMapNum] = useState(0)
   window.setMapNum = setMapNum
 
-  const wTilemapTiles = 17
-  const hTilemapTiles = 17
+  const wTilemapTiles = 19
+  const hTilemapTiles = 19
 
   const screenBoxTiles = 9
   const tilePx = 32
@@ -212,7 +212,7 @@ const PurseOnline = props => {
   const wTilemapPx = tilePx * wTilemapTiles
   const hTilemapPx = tilePx * hTilemapTiles
 
-  const boxScale = 1 // innerMin / screenBoxPx
+  const boxScale = /* 1 // */ innerMin / screenBoxPx
 
   useLog({ boxScale })
 
