@@ -7,22 +7,22 @@ import React, {
   SetStateAction,
   MutableRefObject,
   CSSProperties,
-} from "react"
-import "firebase/app"
-import "firebase/auth"
+} from 'react'
+import 'firebase/app'
+import 'firebase/auth'
 
-import "./Purse.scss"
+import './Purse.scss'
 // import './Skins.scss'
 
-import vehicle_pngs from "../assets/vehicles/*.png"
-import ghost_pngs from "../assets/ghosts/*.png"
+import vehicle_pngs from '../assets/vehicles/*.png'
+import ghost_pngs from '../assets/ghosts/*.png'
 
-import Sprite, { Direction } from "./Sprite"
+import Sprite, { Direction } from './Sprite'
 
 // import Person from './Person'
 // import Boi from './Boi'
 
-import { useAnimationFrame, useInnerSize, useKeysDown, useLog, useGamepad, useImages } from "./use"
+import { useAnimationFrame, useInnerSize, useKeysDown, useLog, useGamepad, useImages } from './use'
 
 const { keys, values, entries } = Object
 
@@ -82,41 +82,41 @@ const walkingFrames = [1, 0, 1, 2]
 
 const vehicleHeights = {
   ambulance: 2,
-  "articulated-lorry": 3,
-  "auto-rickshaw": 2,
+  'articulated-lorry': 3,
+  'auto-rickshaw': 2,
   automobile: 2,
   bicycle: 1,
   bus: 3,
-  "delivery-truck": 3,
-  "fire-engine": 3,
+  'delivery-truck': 3,
+  'fire-engine': 3,
   minibus: 2,
-  "motor-boat": 2,
-  "motor-scooter": 2,
-  "police-car": 2,
-  "racing-car": 2,
-  "racing-motorcycle": 2,
-  "railway-car": 2,
-  "recreational-vehicle": 2,
+  'motor-boat': 2,
+  'motor-scooter': 2,
+  'police-car': 2,
+  'racing-car': 2,
+  'racing-motorcycle': 2,
+  'railway-car': 2,
+  'recreational-vehicle': 2,
   sailboat: 1,
   scooter: 1,
   speedboat: 1,
   taxi: 2,
   tractor: 2,
-  "tram-car": 2,
+  'tram-car': 2,
   trolleybus: 3,
 }
 
 const ghostHeights = {
-  ghost0: 1,
-  ghost1: 1,
-  ghost2: 1,
-  ghost3: 1,
-  ghost4: 1,
-  ghost5: 1,
-  ghost6: 1,
-  ghost7: 1,
-  ghost8: 1,
-  ghost9: 1,
+  ghost0: 2,
+  ghost1: 2,
+  ghost2: 2,
+  ghost3: 2,
+  ghost4: 2,
+  ghost5: 2,
+  ghost6: 2,
+  ghost7: 2,
+  ghost8: 2,
+  ghost9: 2,
 }
 
 // const skins = [
@@ -290,10 +290,10 @@ const PurseOnline = props => {
   const movingJoyDown = gamepad && ~~(gamepad.axes[1] + 0.5) > 0
   const movingJoyLeft = gamepad && ~~(gamepad.axes[0] - 0.5) < 0
 
-  const holdingUp = "ArrowUp" in keysDown || "w" in keysDown || movingJoyUp
-  const holdingRight = "ArrowRight" in keysDown || "d" in keysDown || movingJoyRight
-  const holdingDown = "ArrowDown" in keysDown || "s" in keysDown || movingJoyDown
-  const holdingLeft = "ArrowLeft" in keysDown || "a" in keysDown || movingJoyLeft
+  const holdingUp = 'ArrowUp' in keysDown || 'w' in keysDown || movingJoyUp
+  const holdingRight = 'ArrowRight' in keysDown || 'd' in keysDown || movingJoyRight
+  const holdingDown = 'ArrowDown' in keysDown || 's' in keysDown || movingJoyDown
+  const holdingLeft = 'ArrowLeft' in keysDown || 'a' in keysDown || movingJoyLeft
 
   const faceEffect =
     // holdingUp ? EFFECT_FACE_UP :
@@ -305,9 +305,9 @@ const PurseOnline = props => {
       : 0
 
   const moveXEffect =
-    holdingRight && dir !== "left" ? EFFECT_MOVE_RIGHT : holdingLeft && dir !== "right" ? EFFECT_MOVE_LEFT : 0
+    holdingRight && dir !== 'left' ? EFFECT_MOVE_RIGHT : holdingLeft && dir !== 'right' ? EFFECT_MOVE_LEFT : 0
 
-  const moveYEffect = holdingUp && dir !== "down" ? EFFECT_MOVE_UP : holdingDown && dir !== "up" ? EFFECT_MOVE_DOWN : 0
+  const moveYEffect = holdingUp && dir !== 'down' ? EFFECT_MOVE_UP : holdingDown && dir !== 'up' ? EFFECT_MOVE_DOWN : 0
 
   const moveEffect = moveXEffect | moveYEffect
 
@@ -352,10 +352,10 @@ const PurseOnline = props => {
 
       if (tryFace) {
         const newdir = {
-          [EFFECT_FACE_UP]: "up",
-          [EFFECT_FACE_RIGHT]: "right",
-          [EFFECT_FACE_DOWN]: "down",
-          [EFFECT_FACE_LEFT]: "left",
+          [EFFECT_FACE_UP]: 'up',
+          [EFFECT_FACE_RIGHT]: 'right',
+          [EFFECT_FACE_DOWN]: 'down',
+          [EFFECT_FACE_LEFT]: 'left',
         }[faceEff]
 
         ent.dir = newdir
@@ -498,7 +498,7 @@ const PurseOnline = props => {
                   y={e.y}
                   w={e.w}
                   h={e.h}
-                  spriteOnSheetDir={"right"}
+                  spriteOnSheetDir={'right'}
                   dir={e.dir}
                   tilemap={tilemapRef}
                   inertMs={inertMs}
